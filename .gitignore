@@ -1,0 +1,11 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# VSCode (프론트엔드용)
+.vscode/
+
+# Eclipse (백엔드용)
+.metadata/
+.recommenders/
+RemoteSystemsTempFiles/
