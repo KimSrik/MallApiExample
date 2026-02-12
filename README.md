@@ -26,8 +26,8 @@ npm run dev
 
 
 ## 개발 환경
-- Frontend: React, VSCode
-- Backend: Spring Boot, Eclipse
+- Frontend: React(VSCode)
+- Backend: Spring Boot(Eclipse)
 - Database: MariaDB
 
 ## 포트 설정
