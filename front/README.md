@@ -23,8 +23,8 @@ npm install -D tailwindcss@3.4.17 postcss autoprefixer
 npx tailwindcss init -p
 npm run dev
 ```
--[x]postcss.config.js 파일 생성 확인.
--[x]tailwind.config.js 파일 생성 확인.
+- [X]postcss.config.js 파일 생성 확인.
+- [X]tailwind.config.js 파일 생성 확인.
 
 
 ## Expanding the ESLint configuration
