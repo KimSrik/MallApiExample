@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.demo.dto.PageRequestDTO;
+import com.example.demo.dto.PageResponseDTO;
 import com.example.demo.dto.TodoDTO;
 import com.example.demo.service.TodoService;
 
@@ -34,6 +36,7 @@ public class TodoServicesTests {
 	}
 	*/
 	
+	/*
 	// 글 상세보기 단위 테스트
 	@Test
 	public void testGet() {
@@ -42,6 +45,20 @@ public class TodoServicesTests {
 		TodoDTO todoDTO = todoService.get(tno);
 		
 		log.info(todoDTO);
+	}
+	*/
+	
+	@Test
+	public void testList() {
+		
+		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+				.page(2)
+				.size(10)
+				.build();
+		
+		PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+		
+		log.info(response);
 	}
 	
 	

@@ -58,6 +58,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	public void modify(TodoDTO todoDTO) {
+		log.info("------------modify start");
 		Optional<Todo> result = todoRepository.findById(todoDTO.getTno());
 		
 		Todo todo = result.orElseThrow();
@@ -71,10 +72,12 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	public void remove(Long tno) {
+		log.info("------------remove start");
 		todoRepository.deleteById(tno);
 	}
 	
 	public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO) {
+		log.info("------------list start");
 		Pageable pageable = PageRequest.of( pageRequestDTO.getPage() - 1 ,
 				pageRequestDTO.getSize(),
 				Sort.by("tno").descending());
