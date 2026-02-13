@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tools.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 
 @Data
 @Builder
@@ -27,5 +27,7 @@ public class TodoDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dueDate;
 	// front와 통신을 하면 front에 맞는 형식으로 바꿔주기 위해 JsonFormat 어노테이션을 써서 변환
+	
+	// Data 어노테이션이 Setter, Getter, RequireArgsConstructor 등 까지 포함하고 있다. 
 	
 }
