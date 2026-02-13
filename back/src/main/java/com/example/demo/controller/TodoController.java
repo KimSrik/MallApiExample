@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +36,17 @@ public class TodoController {
 		log.info(pageRequestDTO); 
 		
 		return service.list(pageRequestDTO);
+	}
+	
+	@PostMapping("/")
+	public Map<String, Long> register(@RequestBody TodoDTO todoDTO){
+		// Map로 만드는 이유는 post 후에 보는 결과도 json 형태이기 때문.
+
+		log.info("TodoDTO : " + todoDTO);
+		
+		Long tno = service.register(todoDTO);
+		
+		return Map.of("TNO", tno);
 	}
 	
 
