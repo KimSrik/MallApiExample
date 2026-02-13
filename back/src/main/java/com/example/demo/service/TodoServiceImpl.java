@@ -36,6 +36,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	public TodoDTO get(Long tno) {
+		log.info("------------get start");
 		
 		Optional<Todo> result = todoRepository.findById(tno);
 		
@@ -45,7 +46,23 @@ public class TodoServiceImpl implements TodoService {
 		// get메소드가 상세보기이기 때문에 글을 읽기 위해서 DB에서 데이터를 Entity형태로
 		// 받아오게 되고, DTO로 변환한 후에 front로 넘겨줘야 한다.
 		
-		return dto;
+		return dto;	
+	}
+	
+	public void modify(TodoDTO todoDTO) {
+		Optional<Todo> result = todoRepository.findById(todoDTO.getTno());
 		
+		Todo todo = result.orElseThrow();
+		
+		todo.changeTitle(todoDTO.getTitle());
+		todo.changeDueDate(todoDTO.getDueDate());
+		todo.changeComplete(todoDTO.isComplete());
+		// boolean 타입은 get이 아닌 is 사용!!!
+		
+		todoRepository.save(todo);
+	}
+	
+	public void remove(Long tno) {
+		todoRepository.deleteById(tno);
 	}
 }
