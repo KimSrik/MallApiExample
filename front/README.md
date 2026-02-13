@@ -31,7 +31,7 @@ npm run dev
 
 
 ## tailwindcss 기본 설정
-- tailwind.cofnig.js 수정
+- tailwind.config.js 수정
 ```
 content: [
   "./src/**/*.{js,jsx,ts,tsx}",
