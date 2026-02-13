@@ -33,6 +33,8 @@ public class TodoServicesTests {
 		log.info("tno : " + tno);
 	}
 	*/
+	
+	// 글 상세보기 단위 테스트
 	@Test
 	public void testGet() {
 		Long tno = 101L;
