@@ -38,3 +38,5 @@ const useCustomMove = () => {
 
   return { moveToList, page, size }
 }
+
+export default useCustomMove;
