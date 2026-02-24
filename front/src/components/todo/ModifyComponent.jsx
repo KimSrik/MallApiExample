@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getOne, putOne, deleteOne } from "../../api/todoApi";
+import useCustomMove from "../../hooks/useCustomMove";
+import ResultModal from "../common/ResultModal";
 
 const initState = {
   tno : 0,
@@ -15,6 +17,8 @@ const ModifyComponent = ( {tno} ) => {
 
   const [result, setResult] = useState(null);
 
+  const {moveToList, moveToRead} = useCustomMove();
+
   useEffect( () => {
     getOne(tno).then(data => setTodo(data))
   }, [tno] );
@@ -22,7 +26,7 @@ const ModifyComponent = ( {tno} ) => {
   const handleClickModify = () => {
 
     putOne(todo).then(data => {
-      console.log("수정할 데이터 : " + data);  
+      setResult('Modified');
     })
 
     
@@ -30,7 +34,7 @@ const ModifyComponent = ( {tno} ) => {
 
   const handleClickDelete = () => {
     deleteOne(tno).then(data => {
-      console.log("삭제할 데이터 : " + data);
+      setResult('Deleted');
     })
   }
 
@@ -49,8 +53,17 @@ const ModifyComponent = ( {tno} ) => {
     setTodo({...todo});
   }
 
+  const closeModal = () => {
+    if(result == 'Deleted'){
+      moveToList();
+    }else{
+      moveToRead(tno);
+    }
+  }
+
   return(
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+      {result ? <ResultModal title={`처리결과`} content={result} callbackFn={closeModal}></ResultModal> : <></>}
 
       <div className="flex justify-center mt-10">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
