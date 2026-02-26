@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,19 +59,19 @@ public class CustomFileUtil {
 			Path savePath = Paths.get(uploadPath, savedName);
 			
 			try {
-				Files.copy(multipartFile.getInputStream(), savePath);
+				Files.copy(multipartFile.getInputStream(), savePath);  // 원본 파일 복사
 				
-				String contentType = multipartFile.getContentType();
+				String contentType = multipartFile.getContentType();   // 파일 형식 확인	
 				
 				if(contentType != null && contentType.startsWith("image")) {
 					Path thumbnailPath = Paths.get(uploadPath, "s_" + savedName);
 					
 					Thumbnails.of(savePath.toFile())
-					.size(200, 200)
+					.size(200, 200)				// 200, 200 px 
 					.toFile(thumbnailPath.toFile());
 				}
 				
-				uploadNames.add(savedName);
+				uploadNames.add(savedName);		// 성공 시 파일명을 리스트에 추가
 			}catch (IOException e) {
 				throw new RuntimeException(e.getMessage());
 			}
@@ -75,6 +79,24 @@ public class CustomFileUtil {
 			
 		}
 		return uploadNames;
+	}
+	
+	public ResponseEntity<Resource> getFile(String fileName) {
+		Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+		
+		if(!resource.isReadable()) {
+			resource = new FileSystemResource(uploadPath + File.separator + "val.jpg");
+		}
+		
+		org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+		
+		try {
+			headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+		}catch(Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
+		
+		return ResponseEntity.ok().headers(headers).body(resource);
 	}
 	
 }
