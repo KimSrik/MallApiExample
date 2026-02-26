@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Component
 @Log4j2
@@ -55,6 +56,17 @@ public class CustomFileUtil {
 			
 			try {
 				Files.copy(multipartFile.getInputStream(), savePath);
+				
+				String contentType = multipartFile.getContentType();
+				
+				if(contentType != null && contentType.startsWith("image")) {
+					Path thumbnailPath = Paths.get(uploadPath, "s_" + savedName);
+					
+					Thumbnails.of(savePath.toFile())
+					.size(200, 200)
+					.toFile(thumbnailPath.toFile());
+				}
+				
 				uploadNames.add(savedName);
 			}catch (IOException e) {
 				throw new RuntimeException(e.getMessage());
